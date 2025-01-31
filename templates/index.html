@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SolvAI App</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="sidebar-logo" onclick="showAI()">
+        <img
+          src="{{ url_for('static', filename='asset/logo.png') }}"
+          alt="Logo"
+        />
+      </div>
+      <a href="https://solvai.gitbook.io/solvai-docs" target="_blank">
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/file-container.png') }}"
+            alt="Doc"
+          />
+        </button>
+      </a>
+      <a href="https://t.me/SolvAI_Official" target="_blank">
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/network.png') }}"
+            alt="Community"
+          />
+        </button>
+      </a>
+      <a
+        href="https://solvai.gitbook.io/solvai-docs/get-started/how_to_use_solvai_app"
+        target="_blank"
+      >
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/faq.png') }}"
+            alt="Help"
+          />
+        </button>
+      </a>
+      <a href="https://solvai-agent.com/" target="_blank">
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/internet.png') }}"
+            alt="Website"
+          />
+        </button>
+      </a>
+    </div>
+    <div class="main">
+      <header>
+        <div class="logo-container" onclick="showAI()">
+          <img
+            src="{{ url_for('static', filename='asset/logo.png') }}"
+            alt="Logo"
+          />
+        </div>
+        <h1>SolvAI App</h1>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        <div id="menu" class="dropdown-menu">
+          <button id="wallet-btn" onclick="openAddressModal()">
+            Connect Wallet
+          </button>
+          <span id="wallet-status">Not Connected</span>
+        </div>
+      </header>
+      <main>
+        <button class="main-btn" onclick="openAddressModal()">
+          Connect Wallet & Verify
+        </button>
+        <div
+          id="loading-spinner"
+          class="loading-spinner"
+          style="display: none"
+        ></div>
+        <div class="action-section">
+          <button class="action-btn disabled" onclick="showTable('ICO')">
+            Find ICO
+          </button>
+          <button
+            class="action-btn disabled"
+            onclick="showTable('Yield Farming')"
+          >
+            Yield Farming
+          </button>
+        </div>
+        <div
+          id="loading-spinner-2"
+          class="loading-spinner"
+          style="display: none"
+        ></div>
+
+        <!-- Table section -->
+        <div id="table-container">
+          <div class="table-header">
+            <span></span>
+            <img
+              src="{{ url_for('static', filename='asset/close.svg') }}"
+              alt="close icon"
+              class="table-close-icon"
+              onclick="closeTable()"
+            />
+          </div>
+          <span>Investing in decentralized projects is trending!</span>
+          <h3></h3>
+          <!-- <table class="table">
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Round</th>
+                <th>Ecosystem</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table> -->
+          <div class="table">
+            <div class="table-head"></div>
+            <div class="table-body"></div>
+          </div>
+        </div>
+
+        <!-- AI agent -->
+        <div id="ai-agent-modal">
+          <div id="ai-chat">
+            <img
+              src="{{ url_for('static', filename='asset/close-black.svg') }}"
+              alt="close icon"
+              class="ai-close-icon"
+              onclick="closeAI()"
+            />
+            <div class="messages" id="messages"></div>
+            <div class="ai-input-box">
+              <div class="ai-input">
+                <input type="text" id="ai-message-input" />
+                <div class="send-button" onclick="sendMessage()">
+                  <img
+                    src="{{ url_for('static', filename='asset/arrow-up.svg') }}"
+                    alt="arrow icon"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Modal -->
+        <div class="address-modal" id="address-modal">
+          <img
+            src="{{ url_for('static', filename='asset/close.svg') }}"
+            alt="close icon"
+            class="address-modal-close-icon"
+            onclick="closeAddressModal()"
+          />
+          <h3>Input your wallet address</h3>
+          <input type="text" id="address-input" />
+          <button onclick="connectWallet()">Submit</button>
+          <div
+            id="loading-spinner-3"
+            class="loading-spinner"
+            style="display: none"
+          ></div>
+        </div>
+
+        <!-- Ai Modal -->
+        <div class="ai-result" id="ai-modal">
+          <h3 class="result-title" id="result-title"></h3>
+          <img
+            src="{{ url_for('static', filename='asset/close.svg') }}"
+            alt="close icon"
+            class="modal-close-icon"
+            onclick="closeAICHAT()"
+          />
+          <p class="result-content" id="result-content"></p>
+        </div>
+      </main>
+      <footer>
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/file-container.png') }}"
+            alt="Doc"
+          />
+        </button>
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/network.png') }}"
+            alt="Community"
+          />
+        </button>
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/faq.png') }}"
+            alt="Help"
+          />
+        </button>
+        <button>
+          <img
+            src="{{ url_for('static', filename='asset/internet.png') }}"
+            alt="Website"
+          />
+        </button>
+      </footer>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.0.0/dist/ethers.umd.min.js"></script>
+  </body>
+</html>
